@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
-from passlib.context import CryptContext
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from typing import Optional
@@ -13,8 +12,9 @@ from config import API_SECRET_KEY, ALGORITHM
 from .crud.users import get_user_by_email, get_user_by_email, get_password_hash
 from .dependencies import get_db
 from .schemas.users import User
+from .utils import verify_password
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="user/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/token")
 
 
 class TokenData(BaseModel):
@@ -47,13 +47,6 @@ def get_current_active_user(current_user: User = Depends(get_current_user)):
     if not current_user.is_active:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
-
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
 
 
 def authenticate_user(db, email: str, password: str):

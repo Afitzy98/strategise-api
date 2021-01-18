@@ -12,6 +12,7 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
+    favourites: str
     is_active: bool
 
     class Config:

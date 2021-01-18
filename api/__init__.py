@@ -5,6 +5,7 @@ from . import models
 from .db import engine
 from .routers import coins, users
 
+# models.Base.metadata.drop_all(bind=engine)  # remove
 models.Base.metadata.create_all(bind=engine)
 
 

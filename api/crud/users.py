@@ -2,10 +2,7 @@ from sqlalchemy.orm import Session
 
 from .. import models
 from ..schemas import users as schemas
-
-
-def get_password_hash(password):
-    return pwd_context.hash(password)
+from ..utils import get_password_hash
 
 
 def get_user(db: Session, user_id: int):
@@ -27,3 +24,15 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
+
+
+def delete_user(db: Session, user: schemas.User):
+    db.delete(user)
+    db.commit()
+
+
+def update_user(db: Session, updated_user: schemas.User):
+    user = get_user(db, updated_user.id)
+    user = updated_user
+    db.commit()
+    return user
