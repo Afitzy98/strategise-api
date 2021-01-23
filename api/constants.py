@@ -1,3 +1,5 @@
+from enum import Enum
+
 DEFAULT_FAVOURITES = [
     "btc-bitcoin",
     "eth-ethereum",
@@ -8,3 +10,9 @@ DEFAULT_FAVOURITES = [
 MA_INDICATOR_VALS = [5, 10, 20]
 MA_INDICATOR_COLORS = ["#FFD700", "#FF69B4", "#7F00FF"]
 NUM_DAYS = 90
+
+
+class PaymentStatus(str, Enum):
+    PAID = "paid"
+    FAILED = "failed"
+    PENDING = "pending"
