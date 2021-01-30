@@ -50,6 +50,7 @@ async def stripe_webhook(
         if event_type == WebhookEvent.CHECKOUT_SESSION_COMPLETED:
             # payment completed so set payment status for current user to paid
             session = event["data"]["object"]
+            print(session)
             user_id = int(session["metadata"]["userId"])
             stripe_id = session["customer"]
 
