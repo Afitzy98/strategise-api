@@ -16,3 +16,9 @@ class PaymentStatus(str, Enum):
     PAID = "paid"
     FAILED = "failed"
     PENDING = "pending"
+
+
+class WebhookEvent(str, Enum):
+    INVOICE_PAID = "invoicce.paid"
+    INVOICE_PAYMENT_FAILED = "invoice.payment_failed"
+    CHECKOUT_SESSION_COMPLETED = "checkout.session.completed"

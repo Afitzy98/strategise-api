@@ -5,7 +5,7 @@ from . import models
 from .db import engine
 from .routers import coins, payments, users
 
-models.Base.metadata.drop_all(bind=engine)  # remove
+# models.Base.metadata.drop_all(bind=engine)  # remove
 models.Base.metadata.create_all(bind=engine)
 
 
@@ -24,6 +24,7 @@ app.add_middleware(
         "Access-Control-Allow-Headers",
         "Authorization",
         "X-Requested-With",
+        "stripe-signature"
     ],
 )
 
