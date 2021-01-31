@@ -32,7 +32,7 @@ def create_checkout_session(
 def customer_portal(
     current_user: schemas.User = Depends(get_current_active_user),
 ):
-    return crud.create_checkout_session(current_user.stripe_customer_id)
+    return crud.create_customer_portal(current_user.stripe_customer_id)
 
 
 @router.post("/hooks")

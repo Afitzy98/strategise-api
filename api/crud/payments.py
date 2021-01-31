@@ -27,7 +27,7 @@ def create_checkout_session(user_id: int):
         return {"error": {"message": str(e)}}
 
 
-def customer_portal(customer_id: str):
+def create_customer_portal(customer_id: str):
     session = stripe.billing_portal.Session.create(
         customer=customer_id, return_url=REDIRECT_URL + "favourites"
     )
