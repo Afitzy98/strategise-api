@@ -24,4 +24,4 @@ class SubscriptionStatus(str, Enum):
 
 class WebhookEvent(str, Enum):
     CHECKOUT_SESSION_COMPLETED = "checkout.session.completed"
-    CUSTOMER_SUBSCRIPTION_DELETED = "customer.subscription.updated"
+    CUSTOMER_SUBSCRIPTION_UPDATED = "customer.subscription.updated"
