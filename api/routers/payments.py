@@ -94,7 +94,7 @@ async def stripe_webhook(
 
             user = users_crud.get_user_by_stripe_id(db, stripe_id)
 
-            if user is not None
+            if user is not None:
                 user.payment_status = PaymentStatus.RENEWING
 
                 users_crud.update_user(db, user)
