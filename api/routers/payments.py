@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional, Dict, Any
 
 from .. import models
-from ..constants import PaymentStatus, WebhookEvent
+from ..constants import SubscriptionStatus, WebhookEvent
 from ..context import get_current_active_user, authenticate_user, create_access_token
 from ..crud import payments as crud
 from ..crud import users as users_crud
@@ -46,7 +46,7 @@ async def stripe_webhook(
         event = crud.construct_webhook_event(body, stripe_signature)
 
         event_type = event["type"]
-        print(f"[SERVER] Incoming Stripe {event_type} Event")
+
         if event_type == WebhookEvent.CHECKOUT_SESSION_COMPLETED:
             # payment completed so set payment status for current user to paid
             session = event["data"]["object"]
@@ -56,48 +56,19 @@ async def stripe_webhook(
             user = users_crud.get_user(db, user_id)
 
             user.stripe_customer_id = stripe_id
-            user.payment_status = PaymentStatus.PAID
+            user.subcription_status = SubscriptionStatus.ACTIVE
 
             users_crud.update_user(db, user)
 
-        if event_type == WebhookEvent.INVOICE_PAYMENT_FAILED:
+        if event_type == WebhookEvent.CUSTOMER_SUBSCRIPTION_UPDATED:
             # payment failed so set the payment status for the current user to failed
-            stripe_id = event["data"]["object"]["customer"]
+            subscription = event["data"]["object"]
 
             user = users_crud.get_user_by_stripe_id(db, stripe_id)
 
-            user.payment_status = PaymentStatus.FAILED
+            user.subcription_status = subscription["status"]
 
             users_crud.update_user(db, user)
-
-        if event_type == WebhookEvent.INVOICE_PAID:
-            stripe_id = event["data"]["object"]["customer"]
-
-            user = users_crud.get_user_by_stripe_id(db, stripe_id)
-
-            if user is not None:
-                user.payment_status = PaymentStatus.PAID
-
-                users_crud.update_user(db, user)
-
-        if event_type == WebhookEvent.CUSTOMER_SUBSCRIPTION_DELETED:
-            stripe_id = event["data"]["object"]["customer"]
-
-            user = users_crud.get_user_by_stripe_id(db, stripe_id)
-
-            user.payment_status = PaymentStatus.CANCELLED
-
-            users_crud.update_user(db, user)
-
-        if event_type == WebhookEvent.INVOICE_CREATED:
-            stripe_id = event["data"]["object"]["customer"]
-
-            user = users_crud.get_user_by_stripe_id(db, stripe_id)
-
-            if user is not None:
-                user.payment_status = PaymentStatus.RENEWING
-
-                users_crud.update_user(db, user)
 
         return json.dumps({"status": "success"})
 

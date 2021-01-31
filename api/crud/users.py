@@ -8,12 +8,18 @@ from ..utils import get_password_hash
 def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
 
+
 def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
 
 
 def get_user_by_stripe_id(db: Session, stripe_id: str):
-    return db.query(models.User).filter(models.User.stripe_customer_id == stripe_id).first()
+    return (
+        db.query(models.User)
+        .filter(models.User.stripe_customer_id == stripe_id)
+        .first()
+    )
+
 
 def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).offset(skip).limit(limit).all()
@@ -35,10 +41,12 @@ def delete_user(db: Session, user: schemas.User):
 
 def update_user(db: Session, updated_user: schemas.User):
     user = get_user(db, updated_user.id)
-    
+
     user.favourites = updated_user.favourites
-    user.payment_status = updated_user.payment_status # TODO: need admin role to restrict this
+    user.subscription_status = (
+        updated_user.subscription_status
+    )  # TODO: need admin role to restrict this
     user.stripe_customer_id = updated_user.stripe_customer_id
-    
+
     db.commit()
     return user

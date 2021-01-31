@@ -1,7 +1,8 @@
 from typing import List, Optional
 from pydantic import BaseModel
 
-from ..constants import PaymentStatus
+from ..constants import SubscriptionStatus
+
 
 class UserBase(BaseModel):
     email: str
@@ -15,7 +16,7 @@ class User(UserBase):
     id: int
     favourites: str
     is_active: bool
-    payment_status: PaymentStatus
+    subscription_status: SubscriptionStatus
     stripe_customer_id: str = None
 
     class Config:

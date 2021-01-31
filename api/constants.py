@@ -12,17 +12,16 @@ MA_INDICATOR_COLORS = ["#FFD700", "#FF69B4", "#7F00FF"]
 NUM_DAYS = 90
 
 
-class PaymentStatus(str, Enum):
-    PAID = "paid"
-    FAILED = "failed"
-    PENDING = "pending"
-    CANCELLED = "cancelled"
-    RENEWING = "renewing"
+class SubscriptionStatus(str, Enum):
+    ACTIVE = "active"
+    CANCELED = "canceled"
+    INCOMPLETE = "incomplete"
+    INCOMPLETE_EXPIRED = "incomplete_expired"
+    PAST_DUE = "past_due"
+    TRIALING = "trialing"
+    UNPAID = "unpaid"
 
 
 class WebhookEvent(str, Enum):
     CHECKOUT_SESSION_COMPLETED = "checkout.session.completed"
-    CUSTOMER_SUBSCRIPTION_DELETED = "customer.subscription.deleted"
-    INVOICE_CREATED = "invoice.created"
-    INVOICE_PAID = "invoice.paid"
-    INVOICE_PAYMENT_FAILED = "invoice.payment_failed"
+    CUSTOMER_SUBSCRIPTION_DELETED = "customer.subscription.updated"

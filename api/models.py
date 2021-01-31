@@ -2,7 +2,7 @@ import json
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Enum
 from sqlalchemy.orm import relationship
 
-from .constants import DEFAULT_FAVOURITES, PaymentStatus
+from .constants import DEFAULT_FAVOURITES, SubscriptionStatus
 from .db import Base
 
 
@@ -14,5 +14,5 @@ class User(Base):
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
     favourites = Column(String, unique=False, default=json.dumps(DEFAULT_FAVOURITES))
-    payment_status = Column(String, default=PaymentStatus.PENDING)
+    subscription_status = Column(String, default=SubscriptionStatus.UNPAID)
     stripe_customer_id = Column(String, unique=True)

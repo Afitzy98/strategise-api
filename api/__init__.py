@@ -24,7 +24,7 @@ app.add_middleware(
         "Access-Control-Allow-Headers",
         "Authorization",
         "X-Requested-With",
-        "stripe-signature"
+        "stripe-signature",
     ],
 )
 
