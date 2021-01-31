@@ -46,7 +46,7 @@ async def stripe_webhook(
         event = crud.construct_webhook_event(body, stripe_signature)
 
         event_type = event["type"]
-
+        print(f"[SERVER] Incoming Stripe {event_type} Event")
         if event_type == WebhookEvent.CHECKOUT_SESSION_COMPLETED:
             # payment completed so set payment status for current user to paid
             session = event["data"]["object"]
