@@ -47,10 +47,6 @@ async def stripe_webhook(
 
         event_type = event["type"]
 
-        print(f"\n[SERVER] Incoming {event_type} event from Stripe")
-        print(event["data"]["object"])
-        print("\n")
-
         if event_type == WebhookEvent.CHECKOUT_SESSION_COMPLETED:
             session = event["data"]["object"]
             user_id = int(session["metadata"]["userId"])
@@ -75,5 +71,4 @@ async def stripe_webhook(
         return json.dumps({"status": "success"})
 
     except Exception as e:
-        print(e)  # remove
         return e
