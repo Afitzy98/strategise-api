@@ -65,7 +65,7 @@ async def stripe_webhook(
         if event_type == WebhookEvent.CUSTOMER_SUBSCRIPTION_UPDATED:
             # payment failed so set the payment status for the current user to failed
             subscription = event["data"]["object"]
-
+            stripe_id = subscription["customer"]
             user = users_crud.get_user_by_stripe_id(db, stripe_id)
 
             user.subscription_status = subscription["status"]
