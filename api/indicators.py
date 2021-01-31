@@ -42,5 +42,10 @@ def get_trade_indicators(ohlcv_data: List[Num]):
             "name": "Bot Trades",
             "type": "Trades",
             "data": trades,
+            "settings": {
+                "buyColor": "#66ff00",
+                "sellColor": "#e13026",
+                "markerSize": "1",
+            },
         }
     ]

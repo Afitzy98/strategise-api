@@ -38,7 +38,9 @@ def get_coin_info_by_id(id):
 
 def get_ohlcv_data_for_coin(coin_id: str, num_days: int):
     end = get_string_from_timestamp(get_ts_from_time())  # now
-    start = get_string_from_timestamp(get_ts_from_time(min(365, num_days)))  # num days ago
+    start = get_string_from_timestamp(
+        get_ts_from_time(min(365, num_days))
+    )  # num days ago
 
     data = client.candles(coin_id, start=start, end=end)
 
