@@ -43,9 +43,7 @@ def update_user(db: Session, updated_user: schemas.User):
     user = get_user(db, updated_user.id)
 
     user.favourites = updated_user.favourites
-    user.subscription_status = (
-        updated_user.subscription_status
-    )  # TODO: need admin role to restrict this
+    user.subscription_status = updated_user.subscription_status # TODO: need admin role to restrict this
     user.stripe_customer_id = updated_user.stripe_customer_id
 
     db.commit()

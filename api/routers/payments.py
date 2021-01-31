@@ -47,10 +47,11 @@ async def stripe_webhook(
 
         event_type = event["type"]
 
-        print("\n[SERVER] New Stripe {event_type} Event")
+        print(f"\n[SERVER] Incoming {event_type} event from Stripe")
+        print(event["data"]["object"])
+        print("\n")
 
         if event_type == WebhookEvent.CHECKOUT_SESSION_COMPLETED:
-            # payment completed so set payment status for current user to paid
             session = event["data"]["object"]
             user_id = int(session["metadata"]["userId"])
             stripe_id = session["customer"]
@@ -63,7 +64,6 @@ async def stripe_webhook(
             users_crud.update_user(db, user)
 
         if event_type == WebhookEvent.CUSTOMER_SUBSCRIPTION_UPDATED:
-            # payment failed so set the payment status for the current user to failed
             subscription = event["data"]["object"]
             stripe_id = subscription["customer"]
             user = users_crud.get_user_by_stripe_id(db, stripe_id)
