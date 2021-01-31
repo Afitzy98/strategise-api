@@ -70,6 +70,35 @@ async def stripe_webhook(
 
             users_crud.update_user(db, user)
 
+        if event_type == WebhookEvent.INVOICE_PAID:
+            stripe_id = event["data"]["object"]["customer"]
+
+            user = users_crud.get_user_by_stripe_id(db, stripe_id)
+
+            if user is not None:
+                user.payment_status = PaymentStatus.PAID
+
+                users_crud.update_user(db, user)
+
+        if event_type == WebhookEvent.CUSTOMER_SUBSCRIPTION_DELETED:
+            stripe_id = event["data"]["object"]["customer"]
+
+            user = users_crud.get_user_by_stripe_id(db, stripe_id)
+
+            user.payment_status = PaymentStatus.CANCELLED
+
+            users_crud.update_user(db, user)
+
+        if event_type == WebhookEvent.INVOICE_CREATED:
+            stripe_id = event["data"]["object"]["customer"]
+
+            user = users_crud.get_user_by_stripe_id(db, stripe_id)
+
+            if user is not None
+                user.payment_status = PaymentStatus.RENEWING
+
+                users_crud.update_user(db, user)
+
         return {"status": "success"}
 
     except Exception as e:
