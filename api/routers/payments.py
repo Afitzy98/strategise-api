@@ -99,7 +99,7 @@ async def stripe_webhook(
 
                 users_crud.update_user(db, user)
 
-        return {"status": "success"}
+        return json.dumps({"status": "success"})
 
     except Exception as e:
         print(e)  # remove

@@ -24,5 +24,5 @@ class WebhookEvent(str, Enum):
     CHECKOUT_SESSION_COMPLETED = "checkout.session.completed"
     CUSTOMER_SUBSCRIPTION_DELETED = "customer.subscription.deleted"
     INVOICE_CREATED = "invoice.created"
-    INVOICE_PAID = "invoicce.paid"
+    INVOICE_PAID = "invoice.paid"
     INVOICE_PAYMENT_FAILED = "invoice.payment_failed"
