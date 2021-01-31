@@ -38,6 +38,7 @@ def update_user(db: Session, updated_user: schemas.User):
     
     user.favourites = updated_user.favourites
     user.payment_status = updated_user.payment_status # TODO: need admin role to restrict this
-
+    user.stripe_customer_id = updated_user.stripe_customer_id
+    
     db.commit()
     return user
