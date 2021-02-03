@@ -7,6 +7,20 @@
 
 ## Installation
 
+Create a python virtual environment
+
+```bash
+python -m venv ./
+```
+
+Activate the virtual environment
+
+```bash
+cd env/scripts
+bash: source activate
+cmd: activate.bat
+```
+
 Use the package manager to install the package requirements.
 
 ```bash
