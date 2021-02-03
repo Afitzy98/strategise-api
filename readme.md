@@ -1,8 +1,13 @@
 # Strategize API
 
+## Requirements
+
+- [Python 3](https://www.python.org/downloads/)
+- [pip](https://pip.pypa.io/en/stable/)
+
 ## Installation
 
-Python 3 is required for this project. Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the package requirements.
+Use the package manager to install the package requirements.
 
 ```bash
 pip intstall -r requirements.txt
@@ -31,7 +36,3 @@ To gain access to the authenticated endpoints make a POST request to the /users 
 ## License
 
 [BY-NC-ND 3.0](https://creativecommons.org/licenses/by-nc-nd/3.0/)
-
-```
-
-```
