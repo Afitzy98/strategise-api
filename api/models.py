@@ -16,3 +16,4 @@ class User(Base):
     favourites = Column(String, unique=False, default=json.dumps(DEFAULT_FAVOURITES))
     subscription_status = Column(String, default=SubscriptionStatus.UNPAID)
     stripe_customer_id = Column(String, unique=True)
+    push_subscription = Column(String)

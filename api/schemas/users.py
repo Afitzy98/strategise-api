@@ -18,6 +18,7 @@ class User(UserBase):
     is_active: bool
     subscription_status: SubscriptionStatus
     stripe_customer_id: str = None
+    push_subscription: str = None
 
     class Config:
         orm_mode = True
